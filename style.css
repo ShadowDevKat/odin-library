@@ -1,4 +1,5 @@
-::before,
+*,
+*::before,
 *::after {
     box-sizing: border-box;
     margin: 0;
@@ -6,10 +7,44 @@
 }
 
 :root {
-    --default-color: lightgray;
-    font: 8px Roboto, sans-serif;
+    --default-color: #181414;
+    --primary-color: #4A90E2;
+    --secondary-color: #50e3a1;
+    --accent-color: #9B6DFF;
+
+    font: 10px Roboto, sans-serif;
 }
 
 body {
+    height: 100vh;
+}
+
+.main-container {
     background-color: var(--default-color);
+
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 5fr 1fr;
+}
+
+.header,
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    background-color: var(--primary-color);
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.book-container {
+    background-color: var(--secondary-color);
+}
+
+.footer {
+    background-color: var(--accent-color);
 }
