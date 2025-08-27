@@ -1,3 +1,28 @@
+// DOM Elements
+const bookDisplayContainer = document.getElementById('book-container');
+const addBookBtn = document.getElementById('add-book-btn');
+const addBookDialog = document.getElementById('add-book-form');
+const addBookForm = document.querySelector("dialog form");
+
+// Event Handling
+addBookBtn.addEventListener("click", () => {
+    addBookDialog.showModal();
+});
+
+addBookForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const title = addBookForm.querySelector("#title").value;
+    const author = addBookForm.querySelector("#author").value;
+    const pages = addBookForm.querySelector("#pages").value;
+    const isRead = addBookForm.querySelector("#read").checked;
+
+    addBookToLibrary(title, author, pages, isRead);
+    createBookDisplay(myLibrary.at(-1));
+
+    addBookDialog.close();
+});
+
 // book array
 const myLibrary = [];
 
@@ -31,7 +56,6 @@ function Book(title, author, pages, isRead) {
 
 function addBookToLibrary(title, author, pages, isRead) {
     const newBook = new Book(title, author, pages, isRead);
-
     myLibrary.push(newBook);
 }
 
@@ -40,8 +64,6 @@ function logBooks() {
         book.info();
     }
 }
-
-const bookDisplayContainer = document.getElementById('book-container');
 
 function createBookDisplay(book) {
     const mainContainer = makeElement("div");
