@@ -23,31 +23,39 @@
             </button>
         </div>
 
-        <dialog id="add-book-form">
-            <form method="dialog">
-                <h1>New Book</h1>
-                <div>
-                    <label for="title">Title: </label>
+        <dialog id="add-book-dialog">
+            <form method="dialog" class="book-form">
+                <div class="form-header">
+                    <h1>New Book</h1>
+                    <button type="button" id="close-dialog-btn">X</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Title:</label>
                     <input type="text" name="book_title" id="title" required>
                 </div>
-                <div>
-                    <label for="author">Author: </label>
+
+                <div class="form-group">
+                    <label for="author">Author:</label>
                     <input type="text" name="book_author" id="author" required>
                 </div>
-                <div>
-                    <label for="pages">Pages: </label>
+
+                <div class="form-group">
+                    <label for="pages">Pages:</label>
                     <input type="number" name="book_pages" id="pages" required>
                 </div>
-                <div>
-                    <label for="read">Read: </label>
+
+                <div class="form-group-inline">
+                    <label for="read">Read:</label>
                     <input type="checkbox" name="book_read" id="read">
                 </div>
-                <div>
+
+                <div class="form-footer">
                     <button>Add</button>
-                    <button type="button" id="close-dialog-btn">Close</button>
                 </div>
             </form>
         </dialog>
+
     </div>
 </body>
 

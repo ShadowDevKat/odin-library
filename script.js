@@ -2,7 +2,7 @@
 const bookDisplayContainer = document.getElementById('book-container');
 const showDialogBtn = document.getElementById('show-dialog-btn');
 const closeDialogBtn = document.getElementById('close-dialog-btn');
-const dialogElement = document.getElementById('add-book-form');
+const dialogElement = document.getElementById('add-book-dialog');
 const bookForm = document.querySelector("dialog form");
 
 
