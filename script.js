@@ -1,27 +1,34 @@
 // DOM Elements
 const bookDisplayContainer = document.getElementById('book-container');
-const addBookBtn = document.getElementById('add-book-btn');
-const addBookDialog = document.getElementById('add-book-form');
-const addBookForm = document.querySelector("dialog form");
+const showDialogBtn = document.getElementById('show-dialog-btn');
+const closeDialogBtn = document.getElementById('close-dialog-btn');
+const dialogElement = document.getElementById('add-book-form');
+const bookForm = document.querySelector("dialog form");
+
 
 // Event Handling
-addBookBtn.addEventListener("click", () => {
-    addBookDialog.showModal();
+showDialogBtn.addEventListener("click", () => {
+    dialogElement.showModal();
 });
 
-addBookForm.addEventListener("submit", (e) => {
+closeDialogBtn.addEventListener("click", () => {
+    bookForm.reset();
+    dialogElement.close();
+})
+
+bookForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const title = addBookForm.querySelector("#title").value;
-    const author = addBookForm.querySelector("#author").value;
-    const pages = addBookForm.querySelector("#pages").value;
-    const isRead = addBookForm.querySelector("#read").checked;
+    const title = bookForm.querySelector("#title").value;
+    const author = bookForm.querySelector("#author").value;
+    const pages = bookForm.querySelector("#pages").value;
+    const isRead = bookForm.querySelector("#read").checked;
 
     addBookToLibrary(title, author, pages, isRead);
     createBookDisplay(myLibrary.at(-1));
 
-    addBookForm.reset();
-    addBookDialog.close();
+    bookForm.reset();
+    dialogElement.close();
 });
 
 // book array
@@ -34,16 +41,6 @@ function Book(title, author, pages, isRead) {
     this.author = author;
     this.pages = pages;
     this.isRead = isRead;
-
-    this.detail = function () {
-        return [
-            `Title: ${this.title}`,
-            `Author: ${this.author}`,
-            `Pages: ${this.pages}`,
-            `Read: ${this.isRead ? "Yes" : "No"}`
-        ];
-    }
-
     this.toggleRead = function () {
         this.isRead = !this.isRead;
     }
@@ -73,7 +70,7 @@ function createBookDisplay(book) {
     const toggleBtn = makeElement("button", "Toggle Read");
     const removeBtn = makeElement("button", "Remove");
     btnContainer.append(toggleBtn, removeBtn);
-    
+
     // Add to display
     bookContainer.append(listParent, btnContainer);
     bookDisplayContainer.appendChild(bookContainer);
@@ -95,9 +92,7 @@ function makeElement(type, content = "") {
 }
 
 function displayBooks() {
-    for (let book of myLibrary) {
-        createBookDisplay(book);
-    }
+    myLibrary.forEach(book => createBookDisplay(book));
 }
 
 function removeBook(element) {
