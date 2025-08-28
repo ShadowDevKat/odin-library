@@ -20,6 +20,7 @@ addBookForm.addEventListener("submit", (e) => {
     addBookToLibrary(title, author, pages, isRead);
     createBookDisplay(myLibrary.at(-1));
 
+    addBookForm.reset();
     addBookDialog.close();
 });
 
@@ -68,6 +69,7 @@ function logBooks() {
 function createBookDisplay(book) {
     const mainContainer = makeElement("div");
     mainContainer.classList.add("book-card");
+    mainContainer.setAttribute("data-book-id", book.id);
 
     // Info
     const listParent = makeElement("ul");
@@ -87,6 +89,11 @@ function createBookDisplay(book) {
 
     // Add to display
     bookDisplayContainer.appendChild(mainContainer);
+
+    // Hook events
+    removeBtn.addEventListener("click", () => {
+        removeBook(mainContainer);
+    });
 }
 
 function makeElement(type, content = "") {
@@ -98,6 +105,17 @@ function makeElement(type, content = "") {
 function displayBooks() {
     for (let book of myLibrary) {
         createBookDisplay(book);
+    }
+}
+
+function removeBook(element) {
+    const targetId = element.dataset.bookId;
+    if (targetId) {
+        const index = myLibrary.findIndex(book => book.id === targetId);
+        if (index !== -1) {
+            myLibrary.splice(index, 1);
+            element.remove();
+        }
     }
 }
 
