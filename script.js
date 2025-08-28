@@ -33,17 +33,7 @@ function Book(title, author, pages, isRead) {
     this.title = title;
     this.author = author;
     this.pages = pages;
-    this.isRead = isRead
-
-    this.info = function () {
-        console.log(`
-            Book ID: ${this.id}
-            Title:   ${this.title}
-            Author:  ${this.author}
-            Pages:   ${this.pages}
-            Read:    ${this.isRead ? "Yes" : "No"}
-            `);
-    };
+    this.isRead = isRead;
 
     this.detail = function () {
         return [
@@ -53,6 +43,10 @@ function Book(title, author, pages, isRead) {
             `Read: ${this.isRead ? "Yes" : "No"}`
         ];
     }
+
+    this.toggleRead = function () {
+        this.isRead = !this.isRead;
+    }
 }
 
 function addBookToLibrary(title, author, pages, isRead) {
@@ -60,39 +54,37 @@ function addBookToLibrary(title, author, pages, isRead) {
     myLibrary.push(newBook);
 }
 
-function logBooks() {
-    for (let book of myLibrary) {
-        book.info();
-    }
-}
-
 function createBookDisplay(book) {
-    const mainContainer = makeElement("div");
-    mainContainer.classList.add("book-card");
-    mainContainer.setAttribute("data-book-id", book.id);
+    const bookContainer = makeElement("div");
+    bookContainer.classList.add("book-card");
+    bookContainer.setAttribute("data-book-id", book.id);
 
     // Info
     const listParent = makeElement("ul");
-    book.detail().forEach(text => listParent.appendChild(makeElement("li", text)));
-
-    mainContainer.appendChild(listParent);
+    const titleLi = makeElement("li", `Title: ${book.title}`);
+    const authorLi = makeElement("li", `Author: ${book.author}`);
+    const pagesLi = makeElement("li", `Pages: ${book.pages}`);
+    const readLi = makeElement("li", `Read: ${book.isRead ? "Yes" : "No"}`);
+    listParent.append(titleLi, authorLi, pagesLi, readLi);
 
     // Buttons
     const btnContainer = makeElement("div");
     btnContainer.classList.add("btn-container");
-
     const toggleBtn = makeElement("button", "Toggle Read");
     const removeBtn = makeElement("button", "Remove");
-    [toggleBtn, removeBtn].forEach(btn => btnContainer.appendChild(btn));
-
-    mainContainer.appendChild(btnContainer);
-
+    btnContainer.append(toggleBtn, removeBtn);
+    
     // Add to display
-    bookDisplayContainer.appendChild(mainContainer);
+    bookContainer.append(listParent, btnContainer);
+    bookDisplayContainer.appendChild(bookContainer);
 
     // Hook events
     removeBtn.addEventListener("click", () => {
-        removeBook(mainContainer);
+        removeBook(bookContainer);
+    });
+    toggleBtn.addEventListener("click", () => {
+        book.toggleRead();
+        readLi.innerText = `Read: ${book.isRead ? "Yes" : "No"}`;
     });
 }
 
@@ -123,5 +115,4 @@ addBookToLibrary("The Silent Horizon", "Mira Collins", 324, true);
 addBookToLibrary("Shadows of the Valley", "Ethan Ward", 198, false);
 addBookToLibrary("Journey Beyond the Stars", "Aisha Khan", 412, true);
 
-// logBooks();
 displayBooks();
