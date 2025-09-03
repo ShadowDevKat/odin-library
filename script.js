@@ -35,15 +35,17 @@ bookForm.addEventListener("submit", (e) => {
 const myLibrary = [];
 
 // constructor
-function Book(title, author, pages, isRead) {
-    this.id = crypto.randomUUID();
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.isRead = isRead;
-    this.toggleRead = function () {
-        this.isRead = !this.isRead;
+class Book {
+    constructor(title, author, pages, isRead) {
+        this.id = crypto.randomUUID();
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.isRead = isRead;
     }
+    toggleRead() {
+        this.isRead = !this.isRead;
+    };
 }
 
 function addBookToLibrary(title, author, pages, isRead) {
